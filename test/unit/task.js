@@ -31,12 +31,12 @@ describe('Task', function(){
         p1.save(function(){
           p2.save(function(){
             p3.save(function(){
-              var to1 = {name:'get milk', due:'8/7/2014', photo:'http://facebook.com/picture.jpg', tags:'food, home, dairy', priorityId: p1._id.toString()};
-              var to2 = {name:'return videotapes', due:'8/7/2014', photo:'http://facebook.com/picture.jpg', tags:'food, home, dairy', priorityId: p2._id.toString()};
-              var to3 = {name:'get gas', due:'8/7/2014', photo:'http://facebook.com/picture.jpg', tags:'food, home, dairy', priorityId: p3._id.toString()};
-              var to4 = {name:'cook dinner', due:'8/7/2014', photo:'http://facebook.com/picture.jpg', tags:'food, home, dairy', priorityId: p1._id.toString()};
-              var to5 = {name:'achieve nirvana', due:'8/7/2014', photo:'http://facebook.com/picture.jpg', tags:'food, home, dairy', priorityId: p2._id.toString()};
-              var to6 = {name:'go nuts!', due:'8/7/2014', photo:'http://facebook.com/picture.jpg', tags:'food, home, dairy', priorityId: p3._id.toString()};
+              var to1 = {name:'get milk', due:'1/1/2014', photo:'http://facebook.com/picture.jpg', tags:'food, home, dairy', priorityId: p1._id.toString()};
+              var to2 = {name:'return videotapes', due:'6/1/2014', photo:'http://facebook.com/picture.jpg', tags:'movie, rental, fine', priorityId: p2._id.toString()};
+              var to3 = {name:'get gas', due:'2/1/2014', photo:'http://facebook.com/picture.jpg', tags:'car, transport, home', priorityId: p3._id.toString()};
+              var to4 = {name:'cook dinner', due:'5/1/2014', photo:'http://facebook.com/picture.jpg', tags:'food, home, meal', priorityId: p1._id.toString()};
+              var to5 = {name:'achieve nirvana', due:'4/1/2014', photo:'http://facebook.com/picture.jpg', tags:'life, home, zen', priorityId: p2._id.toString()};
+              var to6 = {name:'go nuts!', due:'3/1/2014', photo:'http://facebook.com/picture.jpg', tags:'bar, booze, friends', priorityId: p3._id.toString()};
               t1 = new Task(to1);
               t2 = new Task(to2);
               t3 = new Task(to3);
