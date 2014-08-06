@@ -26,6 +26,12 @@ Task.count = function(cb){
   });
 };
 
+Task.update = function(id, obj, cb){
+  id = Mongo.ObjectID(id);
+  console.log(id);
+  var val = (obj.completed) ? true : false;
+  Task.collection.update({_id:id}, {$set:{isComplete:val}}, cb);
+};
 
 Task.findById = function(id, cb){
   id = Mongo.ObjectID(id);

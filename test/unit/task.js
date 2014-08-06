@@ -44,6 +44,8 @@ describe('Task', function(){
               t5 = new Task(to5);
               t6 = new Task(to6);
 
+              t2.isComplete = true;
+
               t1.save(function(){
                 t2.save(function(){
                   t3.save(function(){
@@ -84,12 +86,22 @@ describe('Task', function(){
       });
     });
   });
-  describe('#update', function(){
-    it('should target completion status', function(){
-      // NEED TO FINISH THIS
-      // RESEARCH CHECKBOXES
-      // WHAT ARE THE PARAMS?
-      // 
+  describe('.update', function(){
+    it('should set task\'s completed status to true in databse', function(done){
+      Task.update(t1._id.toString(), {completed:'true'}, function(){
+        Task.findById(t1._id.toString(), function(task){
+          expect(task.isComplete).to.be.true;
+          done();
+        });
+      });
+    });
+    it('should set task\'s completed status to false in databse', function(done){
+      Task.update(t2._id.toString(), {}, function(){
+        Task.findById(t2._id.toString(), function(task){
+          expect(task.isComplete).to.be.false;
+          done();
+        });
+      });
     });
   });
   describe('.findById', function(){
