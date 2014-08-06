@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var Mongo = require('mongodb');
 
 function Priority(obj){
   this.name = obj.name;
@@ -23,8 +24,19 @@ Priority.all = function(cb){
   });
 };
 
+Priority.findById = function(id, cb){
+  id = Mongo.ObjectID(id);
+
+  Priority.collection.findOne({_id:id}, function(err,obj){
+    cb(reProto(obj));
+  });
+};
+
 module.exports = Priority;
 
+
+
+//HELPERS
 function reProto(obj){
   return _.create(Priority.prototype, obj);
 }

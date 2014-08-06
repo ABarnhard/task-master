@@ -59,4 +59,13 @@ describe('Priority', function(){
       });
     });
   });
+  describe('.findById', function(){
+    it('should return the object with that id', function(done){
+      Priority.findById(p1._id.toString(), function(priority){
+        expect(p1).to.eql(priority);
+        expect(priority).to.respondTo('save');
+        done();
+      });
+    });
+  });
 });
