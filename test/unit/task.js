@@ -85,7 +85,12 @@ describe('Task', function(){
     });
   });
   describe('#update', function(){
-
+    it('should target completion status', function(){
+      // NEED TO FINISH THIS
+      // RESEARCH CHECKBOXES
+      // WHAT ARE THE PARAMS?
+      // 
+    });
   });
   describe('.findById', function(){
     it('should find a task in database by it\'s id', function(done){
