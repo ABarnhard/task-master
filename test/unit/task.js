@@ -87,7 +87,7 @@ describe('Task', function(){
     });
   });
   describe('.update', function(){
-    it('should set task\'s completed status to true in databse', function(done){
+    it('should set task\'s completed status to true in database', function(done){
       Task.update(t1._id.toString(), {completed:'true'}, function(){
         Task.findById(t1._id.toString(), function(task){
           expect(task.isComplete).to.be.true;
@@ -95,7 +95,7 @@ describe('Task', function(){
         });
       });
     });
-    it('should set task\'s completed status to false in databse', function(done){
+    it('should set task\'s completed status to false in database', function(done){
       Task.update(t2._id.toString(), {}, function(){
         Task.findById(t2._id.toString(), function(task){
           expect(task.isComplete).to.be.false;
