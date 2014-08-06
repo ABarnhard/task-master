@@ -1,6 +1,6 @@
 'use strict';
 
-//var _ = require('lodash');
+var _ = require('lodash');
 var Mongo = require('mongodb');
 
 Object.defineProperty(Task, 'collection', {
@@ -26,5 +26,18 @@ Task.count = function(cb){
   });
 };
 
+
+Task.findById = function(id, cb){
+  id = Mongo.ObjectID(id);
+  Task.collection.findOne({_id:id}, function(err,obj){
+    cb(reProto(obj));
+  });
+};
+
 module.exports = Task;
 
+//HELPERS
+
+function reProto(obj){
+  return _.create(Task.prototype, obj);
+}

@@ -84,6 +84,18 @@ describe('Task', function(){
       });
     });
   });
+  describe('#update', function(){
+
+  });
+  describe('.findById', function(){
+    it('should find a task in database by it\'s id', function(done){
+      Task.findById(t1._id.toString(), function(task){
+        expect(task).to.eql(t1);
+        expect(task).to.respondTo('save');
+        done();
+      });
+    });
+  });
   describe('.count', function(){
     it('should return the # of tasks in the collection', function(done){
       Task.count(function(count){
