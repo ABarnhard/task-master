@@ -8,7 +8,10 @@ var Priority = require('../../app/models/priority');
 var Mongo = require('mongodb');
 var connect = require('../../app/lib/mongodb');
 
-var p1;
+var p1, p2, p3;
+var o1 = {name:'high', color:'#cccccc', value:'5'};
+var o2 = {name:'low', color:'#00cccc', value:'3'};
+var o3 = {name:'med', color:'#cc00cc', value:'4'};
 
 describe('Priority', function(){
   before(function(done){
@@ -18,7 +21,16 @@ describe('Priority', function(){
   });
   beforeEach(function(done){
     Priority.collection.remove(function(){
-      done();
+      p1 = new Priority(o1);
+      p2 = new Priority(o2);
+      p3 = new Priority(o3);
+      p1.save(function(){
+        p2.save(function(){
+          p3.save(function(){
+            done();
+          });
+        });
+      });
     });
   });
   describe('constructor', function(){
@@ -35,6 +47,14 @@ describe('Priority', function(){
       p1 = new Priority({name:'high', color:'#cccccc', value: '10'});
       p1.save(function(){
         expect(p1._id).to.be.instanceof(Mongo.ObjectID);
+        done();
+      });
+    });
+  });
+  describe('.all', function(){
+    it('should return an array of all priorities', function(done){
+      Priority.all(function(priorities){
+        expect(priorities).to.have.length(3);
         done();
       });
     });
