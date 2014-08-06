@@ -1,0 +1,96 @@
+/* jshint expr: true */
+/* global describe, it, before, beforeEach */
+'use strict';
+
+
+var expect = require('chai').expect;
+var Priority = require('../../app/models/priority');
+var Mongo = require('mongodb');
+var connect = require('../../app/lib/mongodb');
+var Task = require('../../app/models/task');
+
+var p1, p2, p3;
+var o1 = {name:'high', color:'#cccccc', value:'5'};
+var o2 = {name:'low', color:'#00cccc', value:'3'};
+var o3 = {name:'med', color:'#cc00cc', value:'4'};
+
+var t1, t2, t3, t4, t5, t6;
+
+describe('Task', function(){
+  before(function(done){
+    connect('taskmaster-test', function(){
+      done();
+    });
+  });
+  beforeEach(function(done){
+    Priority.collection.remove(function(){
+      Task.collection.remove(function(){
+        p1 = new Priority(o1);
+        p2 = new Priority(o2);
+        p3 = new Priority(o3);
+        p1.save(function(){
+          p2.save(function(){
+            p3.save(function(){
+              var to1 = {name:'get milk', due:'8/7/2014', photo:'http://facebook.com/picture.jpg', tags:'food, home, dairy', priorityId: p1._id.toString()};
+              var to2 = {name:'return videotapes', due:'8/7/2014', photo:'http://facebook.com/picture.jpg', tags:'food, home, dairy', priorityId: p2._id.toString()};
+              var to3 = {name:'get gas', due:'8/7/2014', photo:'http://facebook.com/picture.jpg', tags:'food, home, dairy', priorityId: p3._id.toString()};
+              var to4 = {name:'cook dinner', due:'8/7/2014', photo:'http://facebook.com/picture.jpg', tags:'food, home, dairy', priorityId: p1._id.toString()};
+              var to5 = {name:'achieve nirvana', due:'8/7/2014', photo:'http://facebook.com/picture.jpg', tags:'food, home, dairy', priorityId: p2._id.toString()};
+              var to6 = {name:'go nuts!', due:'8/7/2014', photo:'http://facebook.com/picture.jpg', tags:'food, home, dairy', priorityId: p3._id.toString()};
+              t1 = new Task(to1);
+              t2 = new Task(to2);
+              t3 = new Task(to3);
+              t4 = new Task(to4);
+              t5 = new Task(to5);
+              t6 = new Task(to6);
+
+              t1.save(function(){
+                t2.save(function(){
+                  t3.save(function(){
+                    t4.save(function(){
+                      t5.save(function(){
+                        t6.save(function(){
+                          done();
+                        });
+                      });
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+  });
+  describe('constructor', function(){
+    it('should create a task with proper attributes', function(){
+      t1 = new Task({name:'get milk', due:'8/7/2014', photo:'http://facebook.com/picture.jpg', tags:'food, home, dairy', priorityId: p1._id.toString()});
+      expect(t1).to.be.instanceof(Task);
+      expect(t1.name).to.equal('get milk');
+      expect(t1.due).to.respondTo('getDay');
+      expect(t1.photo).to.equal('http://facebook.com/picture.jpg');
+      expect(t1.tags).to.have.length(3);
+      expect(t1.isComplete).to.be.false;
+      expect(t1.priorityId).to.be.instanceof(Mongo.ObjectID);
+    });
+  });
+  describe('#save', function(){
+    it('should save a task to the database', function(done){
+      var task = new Task({name:'get milk', due:'8/7/2014', photo:'http://facebook.com/picture.jpg', tags:'food, home, dairy', priorityId: p1._id.toString()});
+      task.save(function(){
+        expect(task._id).to.be.instanceof(Mongo.ObjectID);
+        done();
+      });
+    });
+  });
+  describe('.count', function(){
+    it('should return the # of tasks in the collection', function(done){
+      Task.count(function(count){
+        expect(count).to.equal(6);
+        done();
+      });
+    });
+  });
+});
+
