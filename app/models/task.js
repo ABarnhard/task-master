@@ -26,12 +26,14 @@ Task.count = function(query, cb){
   var filter = {};
   if(query.filter){filter = {tags:{$in:[query.filter]}};}
   Task.collection.count(filter, function(err, count){
+    count = Math.ceil(count / 3);
+    // ^^^ changed count to return # of pages instead 
     cb(count);
   });
 };
 
 Task.update = function(id, obj, cb){
-  id = Mongo.ObjectID(id);
+  id = (typeof id === 'string') ? Mongo.ObjectID(id) : id;
   var val = (obj.completed) ? true : false;
   Task.collection.update({_id:id}, {$set:{isComplete:val}}, cb);
 };

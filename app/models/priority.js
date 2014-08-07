@@ -18,7 +18,7 @@ Priority.prototype.save = function(cb){
 };
 
 Priority.all = function(cb){
-  Priority.collection.find().toArray(function(err, objs){
+  Priority.collection.find({}, {sort:[['value', -1]]}).toArray(function(err, objs){
     var priorities = objs.map(function(o){return reProto(o);});
     cb(priorities);
   });
