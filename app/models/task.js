@@ -52,7 +52,7 @@ Task.find3 = function(query, cb){
   if(query.page){
     options.skip = ((query.page * 1) - 1) * 3;
   }
-  console.log(filter, options);
+  //console.log(filter, options);
   Task.collection.find(filter, options).toArray(function(err, objs){
     var tasks = objs.map(function(o){return reProto(o);});
     async.map(tasks, function(task, done){
@@ -61,7 +61,7 @@ Task.find3 = function(query, cb){
         done(null, task);
       });
     }, function(err, newTasks){
-      console.log(newTasks);
+      //console.log(newTasks);
       cb(newTasks);
     });
   });
