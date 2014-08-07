@@ -60,6 +60,7 @@ $ npm test
 
 ### Contributors
 - [Adam Barnhard](https://github.com/abarnhard)
+- [Mikey Badr](https://github.com/mfbadr)
 
 ### License
 [MIT](LICENSE)
