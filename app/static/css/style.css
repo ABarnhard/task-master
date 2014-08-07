@@ -1,0 +1,62 @@
+html{
+  min-height: 100%;
+  background-color: #3D7099;
+}
+nav ul, #pages ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav li, #pages li {
+  display: inline-block;
+  margin: 3px 5px;
+}
+
+nav li a, #pages li a {
+  text-decoration: none;
+  color: black;
+}
+
+table {
+  border-collapse: collapse;
+  text-align: center;
+}
+
+td {
+  border: 2px solid black;
+  min-width: 150px;
+}
+
+.header{
+  background-color:#3d9970;
+  border-bottom: 2px solid black;
+}
+
+h1{
+  margin: 0;
+}
+
+body{
+  margin: 0;
+  min-height: 100%;
+  position: relative;
+}
+
+.content{
+  background-color: #3D7099;
+  padding: 1em;
+  position: absolute;
+}
+
+.wrapper{
+  position: relative;
+  min-height: 100%;
+  background-color: #3D7099;
+}
+
+#pages{
+  display: inline;
+  margin: 0 auto;
+  text-align: center;
+}

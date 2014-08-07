@@ -7,16 +7,21 @@ block content
       thead
         tr
           th Name
-          th: a(href='/tasks?sortBy=due#{query.filter ? "&filter=" + query.filter : ""}') Due
+          - var dueOrder = query.order === 'asc' && query.sortBy === 'due' ? 'desc' : 'asc'
+          th: a(href='/tasks?sortBy=due&order=#{dueOrder}#{query.filter ? "&filter=" + query.filter : ""}') Due
           th Photo
-          th: a(href='/tasks?sortBy=isComplete#{query.filter ? "&filter=" + query.filter : ""}') Completed
+          - var comOrder = query.order === 'asc' && query.sortBy === 'isComplete' ? 'desc' : 'asc'
+          th: a(href='/tasks?sortBy=isComplete&order=#{comOrder}#{query.filter ? "&filter=" + query.filter : ""}') Completed
           th Tags
           th Priority
       tbody
         each task in tasks
           tr(style="background-color:#{task.priority.color}")
             td= task.name
-            td= task.due
+            td
+              = moment(task.due).format('ll')
+              br
+              |(#{moment(task.due).fromNow()})
             td: img(src='#{task.photo}', width='100px', height='100px')
             td
               //- form(method="post" action="/tasks/#{task._id}/update?#{((query.sortBy) ? '&sortBy=' + query.sortBy : '') + ((query.filter) ? '&filter=' + query.filter : '') + ((query.page) ? '&page=' + query.page : '')}")
@@ -28,12 +33,14 @@ block content
                 button Update
             td
               each tag in task.tags
-                a(href="/tasks?filter=#{tag + ((query.sortBy) ? '&sortBy=' + query.sortBy : '')}") #{tag} 
+                a(href="/tasks?filter=#{tag + ((query.sortBy) ? '&sortBy=' + query.sortBy : '')}") #{tag}
+                | 
             td= task.priority.name
-    ul
-      - var page = 1
-      while count
-        li
-          a(href="/tasks?page=#{page + ((query.sortBy) ? '&sortBy=' + query.sortBy : '') + ((query.filter) ? '&filter=' + query.filter : '')}") Page #{page}
-        - count--
-        - page++
+    #pages
+      ul
+        - var page = 1
+        while count
+          li
+            a(href="/tasks?page=#{page + ((query.sortBy) ? '&sortBy=' + query.sortBy : '') + ((query.filter) ? '&filter=' + query.filter : '')}") Page #{page}
+          - count--
+          - page++

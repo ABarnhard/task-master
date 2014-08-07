@@ -6,12 +6,13 @@ html
     link(rel='stylesheet', href='/css/style.css')
   body
     .wrapper
-      h1 Task Master
-      nav
-        ul
-          li: a(href='/tasks') Tasks
-          li: a(href='/tasks/new') Add Task
-          li: a(href='/priorities') Priorities
-          li: a(href='/priorities/new') New Priority
+      .header
+        h1 Task Master
+        nav
+          ul
+            li: a(href='/tasks') Tasks
+            li: a(href='/tasks/new') Add Task
+            li: a(href='/priorities') Priorities
+            li: a(href='/priorities/new') New Priority
       .content
         block content
