@@ -121,5 +121,14 @@ describe('Task', function(){
       });
     });
   });
+  describe('.find3', function(){
+    it('should return 1st 3 tasks from database', function(done){
+      Task.find3({}, function(tasks){
+        expect(tasks).to.have.length(3);
+        expect(tasks[0].priority.name).to.equal('high');
+        done();
+      });
+    });
+  });
 });
 

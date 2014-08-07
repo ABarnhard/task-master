@@ -2,6 +2,8 @@
 
 var _ = require('lodash');
 var Mongo = require('mongodb');
+var async = require('async');
+var Priority = require('./priority');
 
 Object.defineProperty(Task, 'collection', {
   get: function(){return global.mongodb.collection('tasks');}
@@ -36,6 +38,30 @@ Task.findById = function(id, cb){
   id = Mongo.ObjectID(id);
   Task.collection.findOne({_id:id}, function(err,obj){
     cb(reProto(obj));
+  });
+};
+
+Task.find3 = function(query, cb){
+  var options = {limit:3}, filter = {};
+  if(query.filter){filter = {tags:{$in:[query.filter]}};}
+  if(query.sortBy){
+    options.sort = [[query.sortBy,1]];
+  }
+  if(query.page){
+    options.skip = 3 * 1 - (query.page * 1);
+  }
+  console.log(filter, options);
+  Task.collection.find(filter, options).toArray(function(err, objs){
+    var tasks = objs.map(function(o){return reProto(o);});
+    async.map(tasks, function(task, done){
+      Priority.findById(task.priorityId, function(priority){
+        task.priority = priority;
+        done(null, task);
+      });
+    }, function(err, newTasks){
+      console.log(newTasks);
+      cb(newTasks);
+    });
   });
 };
 

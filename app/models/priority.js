@@ -25,7 +25,7 @@ Priority.all = function(cb){
 };
 
 Priority.findById = function(id, cb){
-  id = Mongo.ObjectID(id);
+  id = (typeof id === 'string') ? Mongo.ObjectID(id) : id;
   Priority.collection.findOne({_id:id}, function(err,obj){
     cb(reProto(obj));
   });
