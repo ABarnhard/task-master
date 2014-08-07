@@ -114,9 +114,15 @@ describe('Task', function(){
     });
   });
   describe('.count', function(){
-    it('should return all tasks in the collection', function(done){
+    it('should count all tasks in the collection', function(done){
       Task.count({}, function(count){
         expect(count).to.equal(6);
+        done();
+      });
+    });
+    it('should count tasks with tag home in the collection', function(done){
+      Task.count({filter:'home'}, function(count){
+        expect(count).to.equal(4);
         done();
       });
     });
