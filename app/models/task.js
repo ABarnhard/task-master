@@ -48,7 +48,7 @@ Task.find3 = function(query, cb){
     options.sort = [[query.sortBy,1]];
   }
   if(query.page){
-    options.skip = 3 * 1 - (query.page * 1);
+    options.skip = ((query.page * 1) - 1) * 3;
   }
   console.log(filter, options);
   Task.collection.find(filter, options).toArray(function(err, objs){

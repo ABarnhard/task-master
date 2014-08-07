@@ -129,6 +129,13 @@ describe('Task', function(){
         done();
       });
     });
+    it('should return last 3 tasks from database', function(done){
+      Task.find3({page:'2'}, function(tasks){
+        expect(tasks).to.have.length(3);
+        expect(tasks[0].name).to.equal('cook dinner');
+        done();
+      });
+    });
   });
 });
 
