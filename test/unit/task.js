@@ -156,6 +156,20 @@ describe('Task', function(){
         done();
       });
     });
+    it('should return tasks with food tag in decending order by date', function(done){
+      Task.find3({filter:'food', sortBy:'due'}, function(tasks){
+        expect(tasks).to.have.length(2);
+        expect(tasks[0].name).to.equal('get milk');
+        done();
+      });
+    });
+    it('should return 2 page of tasks with home tag in decending order by date', function(done){
+      Task.find3({filter:'home', sortBy:'due', page:'2'}, function(tasks){
+        expect(tasks).to.have.length(1);
+        expect(tasks[0].name).to.equal('cook dinner');
+        done();
+      });
+    });
   });
 });
 
