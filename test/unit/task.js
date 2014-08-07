@@ -114,8 +114,8 @@ describe('Task', function(){
     });
   });
   describe('.count', function(){
-    it('should return the # of tasks in the collection', function(done){
-      Task.count(function(count){
+    it('should return all tasks in the collection', function(done){
+      Task.count({}, function(count){
         expect(count).to.equal(6);
         done();
       });
@@ -133,6 +133,13 @@ describe('Task', function(){
       Task.find3({page:'2'}, function(tasks){
         expect(tasks).to.have.length(3);
         expect(tasks[0].name).to.equal('cook dinner');
+        done();
+      });
+    });
+    it('should return tasks with tag food from database', function(done){
+      Task.find3({filter:'food'}, function(tasks){
+        expect(tasks).to.have.length(2);
+        expect(tasks[0].name).to.equal('get milk');
         done();
       });
     });

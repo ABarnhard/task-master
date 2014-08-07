@@ -22,8 +22,10 @@ Task.prototype.save = function(cb){
   Task.collection.save( this, cb);
 };
 
-Task.count = function(cb){
-  Task.collection.count(function(err, count){
+Task.count = function(query, cb){
+  var filter = {};
+  if(query.filter){filter = {tags:{$in:[query.filter]}};}
+  Task.collection.count(filter, function(err, count){
     cb(count);
   });
 };
