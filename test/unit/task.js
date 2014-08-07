@@ -116,13 +116,13 @@ describe('Task', function(){
   describe('.count', function(){
     it('should count pages tasks in the collection', function(done){
       Task.count({}, function(count){
-        expect(count).to.equal(2);
+        expect(count).to.equal(6);
         done();
       });
     });
     it('should count pages of  with tag home in the collection', function(done){
       Task.count({filter:'home'}, function(count){
-        expect(count).to.equal(2);
+        expect(count).to.equal(4);
         done();
       });
     });
@@ -163,7 +163,7 @@ describe('Task', function(){
         done();
       });
     });
-    it('should return 2 page of tasks with home tag in decending order by date', function(done){
+    it('should return 2nd page of tasks with home tag in decending order by date', function(done){
       Task.find3({filter:'home', sortBy:'due', page:'2'}, function(tasks){
         expect(tasks).to.have.length(1);
         expect(tasks[0].name).to.equal('cook dinner');

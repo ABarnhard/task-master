@@ -26,8 +26,6 @@ Task.count = function(query, cb){
   var filter = {};
   if(query.filter){filter = {tags:{$in:[query.filter]}};}
   Task.collection.count(filter, function(err, count){
-    count = Math.ceil(count / 3);
-    // ^^^ changed count to return # of pages instead 
     cb(count);
   });
 };

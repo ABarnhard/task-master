@@ -39,6 +39,7 @@ block content
     #pages
       ul
         - var page = 1
+        - count = Math.ceil(count/3)
         while count
           li
             a(href="/tasks?page=#{page + ((query.sortBy) ? '&sortBy=' + query.sortBy : '') + ((query.filter) ? '&filter=' + query.filter : '')}") Page #{page}
