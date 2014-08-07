@@ -114,15 +114,15 @@ describe('Task', function(){
     });
   });
   describe('.count', function(){
-    it('should count all tasks in the collection', function(done){
+    it('should count pages tasks in the collection', function(done){
       Task.count({}, function(count){
-        expect(count).to.equal(6);
+        expect(count).to.equal(2);
         done();
       });
     });
-    it('should count tasks with tag home in the collection', function(done){
+    it('should count pages of  with tag home in the collection', function(done){
       Task.count({filter:'home'}, function(count){
-        expect(count).to.equal(4);
+        expect(count).to.equal(2);
         done();
       });
     });
