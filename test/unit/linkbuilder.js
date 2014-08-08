@@ -30,5 +30,17 @@ describe('linkBuilder', function(){
       var link = linkBuilder({}, 'completed', 'Completed');
       expect(link).to.equal('<a href="/tasks?sortBy=isComplete&order=1">Completed</a>');
     });
+    it('Should return a link to sort by Completed in descending order', function(){
+      var link = linkBuilder({sortBy:'isCompleted', order:'1'}, 'completed', 'Completed');
+      expect(link).to.equal('<a href="/tasks?sortBy=isComplete&order=-1">Completed</a>');
+    });
+    it('Should return a link to sort by Completed in acending order filtered by home', function(){
+      var link = linkBuilder({filter:'home'}, 'completed', 'Completed');
+      expect(link).to.equal('<a href="/tasks?sortBy=isComplete&order=1&filter=home">Completed</a>');
+    });
+    it('Should return a link to 2nd page sorted by Completed in acending order filtered by home', function(){
+      var link = linkBuilder({filter:'home', page:'2'}, 'completed', 'Completed');
+      expect(link).to.equal('<a href="/tasks?sortBy=isComplete&order=1&filter=home&page=2">Completed</a>');
+    });
   });
 });
