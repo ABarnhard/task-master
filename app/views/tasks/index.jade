@@ -7,8 +7,7 @@ block content
       thead
         tr
           th Name
-          - var dueOrder = query.order === '-1' && query.sortBy === 'due' ? '1' : '-1'
-          th: a(href='/tasks?sortBy=due&order=#{dueOrder}#{query.filter ? "&filter=" + query.filter : ""}') Due
+          th:!= linkBuilder(query, 'due', 'Due')
           th Photo
           - var comOrder = query.order === '-1' && query.sortBy === 'isComplete' ? '1' : '-1'
           th: a(href='/tasks?sortBy=isComplete&order=#{comOrder}#{query.filter ? "&filter=" + query.filter : ""}') Completed

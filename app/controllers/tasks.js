@@ -2,6 +2,7 @@
 
 var Task = require('../models/task');
 var Priority = require('../models/priority');
+var linkBuilder = require('../helpers/linkbuilder');
 var moment = require('moment');
 
 exports.init = function(req, res){
@@ -19,9 +20,9 @@ exports.create = function(req, res){
 
 exports.index = function(req, res){
   Task.find3(req.query, function(tasks){
-    console.log(req.query);
+    //console.log(req.query);
     Task.count(req.query, function(count){
-      res.render('tasks/index', {tasks:tasks, count:count, moment:moment, query:req.query});
+      res.render('tasks/index', {tasks:tasks, count:count, moment:moment, query:req.query, linkBuilder:linkBuilder});
     });
   });
 };
