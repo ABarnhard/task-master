@@ -7,33 +7,22 @@ block content
       thead
         tr
           th Name
-          th:!= linkBuilder(query, 'due', 'Due')
+          th:!= linkBuilder.sort(query, 'due', 'Due')
           th Photo
-          - var comOrder = query.order === '-1' && query.sortBy === 'isComplete' ? '1' : '-1'
-          th: a(href='/tasks?sortBy=isComplete&order=#{comOrder}#{query.filter ? "&filter=" + query.filter : ""}') Completed
+          th:!= linkBuilder.sort(query, 'completed', 'Completed')
           th Tags
           th Priority
       tbody
         each task in tasks
           tr(style="background-color:#{task.priority.color}")
             td= task.name
-            td
-              = moment(task.due).format('ll')
-              br
-              |(#{moment(task.due).fromNow()})
+            td #{moment(task.due).format('ll')} (#{moment(task.due).fromNow()})
             td: img(src='#{task.photo}', width='100px', height='100px')
             td
-              //- form(method="post" action="/tasks/#{task._id}/update?#{((query.sortBy) ? '&sortBy=' + query.sortBy : '') + ((query.filter) ? '&filter=' + query.filter : '') + ((query.page) ? '&page=' + query.page : '')}")
-              form(method='post', action='/tasks/#{task._id}/update')
-                if task.isComplete
-                  input(type="checkbox", name="completed", value="true", checked)
-                else
-                  input(type="checkbox", name="completed", value="true")
+              form(method='post', action='/tasks/#{task._id}/update#{linkBuilder.makeString(query)}')
+                != linkBuilder.check(task.isComplete)
                 button Update
-            td
-              each tag in task.tags
-                a(href="/tasks?filter=#{tag + ((query.sortBy) ? '&sortBy=' + query.sortBy : '')}") #{tag}
-                | 
+            td:!= linkBuilder.makeTags(task.tags, query)
             td= task.priority.name
     #pages
       ul

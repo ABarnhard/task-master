@@ -29,7 +29,7 @@ exports.index = function(req, res){
 
 exports.update = function(req, res){
   Task.update(req.params.id, req.body, function(){
-    console.log(req.query);
-    res.redirect('/tasks');
+    //console.log(req.query);
+    res.redirect('/tasks' + linkBuilder.makeString(req.query));
   });
 };
