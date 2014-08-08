@@ -47,7 +47,7 @@ Task.find3 = function(query, cb){
   var options = {limit:3}, filter = {};
   if(query.filter){filter = {tags:{$in:[query.filter]}};}
   if(query.sortBy){
-    var sort = query.order * 1;
+    var sort = (query.order) ? query.order * 1 : 1;
     options.sort = [[query.sortBy,sort]];
   }
   if(query.page){
