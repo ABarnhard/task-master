@@ -47,13 +47,13 @@ Task.find3 = function(query, cb){
   var options = {limit:3}, filter = {};
   if(query.filter){filter = {tags:{$in:[query.filter]}};}
   if(query.sortBy){
-    var sort = (query.order === 'asc') ? -1 : 1;
+    var sort = query.order * 1;
     options.sort = [[query.sortBy,sort]];
   }
   if(query.page){
     options.skip = ((query.page * 1) - 1) * 3;
   }
-  //console.log(filter, options);
+  console.log(filter, options);
   Task.collection.find(filter, options).toArray(function(err, objs){
     var tasks = objs.map(function(o){return reProto(o);});
     async.map(tasks, function(task, done){

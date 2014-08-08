@@ -149,22 +149,22 @@ describe('Task', function(){
         done();
       });
     });
-    it('should return tasks in decending order by date', function(done){
-      Task.find3({sortBy:'due'}, function(tasks){
+    it('should return tasks in ascending order by date', function(done){
+      Task.find3({sortBy:'due', order:'1'}, function(tasks){
         expect(tasks).to.have.length(3);
         expect(tasks[0].name).to.equal('go nuts!');
         done();
       });
     });
-    it('should return tasks with food tag in decending order by date', function(done){
-      Task.find3({filter:'food', sortBy:'due'}, function(tasks){
+    it('should return tasks with food tag in ascending order by date', function(done){
+      Task.find3({filter:'food', sortBy:'due', order:'1'}, function(tasks){
         expect(tasks).to.have.length(2);
         expect(tasks[0].name).to.equal('get milk');
         done();
       });
     });
-    it('should return 2nd page of tasks with home tag in decending order by date', function(done){
-      Task.find3({filter:'home', sortBy:'due', page:'2'}, function(tasks){
+    it('should return 2nd page of tasks with home tag in ascending order by date', function(done){
+      Task.find3({filter:'home', sortBy:'due', order:'1', page:'2'}, function(tasks){
         expect(tasks).to.have.length(1);
         expect(tasks[0].name).to.equal('cook dinner');
         done();
