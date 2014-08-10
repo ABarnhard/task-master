@@ -9,7 +9,7 @@ block content
           th Name
           th:!= linkBuilder.sort(query, 'due', 'Due')
           th Photo
-          th:!= linkBuilder.sort(query, 'completed', 'Completed')
+          th:!= linkBuilder.sort(query, 'isComplete', 'Completed')
           th Tags
           th Priority
       tbody
@@ -19,17 +19,11 @@ block content
             td #{moment(task.due).format('ll')} (#{moment(task.due).fromNow()})
             td: img(src='#{task.photo}', width='100px', height='100px')
             td
-              form(method='post', action='/tasks/#{task._id}/update#{linkBuilder.makeString(query)}')
-                != linkBuilder.check(task.isComplete)
+              form(method='post', action='/tasks/#{task._id}/update#{linkBuilder.queryString(query)}')
+                input(type='checkbox' name='completed' value='true' checked=task.isComplete)
                 button Update
-            td:!= linkBuilder.makeTags(task.tags, query)
+            td:!= linkBuilder.tags(query, task.tags)
             td= task.priority.name
     #pages
       ul
-        - var page = 1
-        - count = Math.ceil(count/3)
-        while count
-          li
-            a(href="/tasks?page=#{page + ((query.sortBy) ? '&sortBy=' + query.sortBy : '') + ((query.filter) ? '&filter=' + query.filter : '')}") Page #{page}
-          - count--
-          - page++
+        != linkBuilder.pager(query, count)

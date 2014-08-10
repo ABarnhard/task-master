@@ -2,88 +2,41 @@
 
 var _ = require('lodash');
 
-exports.sort = function (query, name, text, count){
-  var query2 = _.cloneDeep(query);
-  switch(name){
-    case 'due':
-      return makeDue(query2, text);
-    case 'completed':
-      return makeCom(query2, text);
+exports.pager = function(query, count){
+  count = Math.ceil(count / 3);
+  var links = '';
+
+  for(var i = 1; i <= count; i++){
+    links += '<li>' + exports.url(query, 'page', i, 'Page ' + i) + '</li>';
   }
+  return links;
 };
 
-exports.check = function(checked){
-  if(checked){
-    return '<input type="checkbox" name="completed" value="true" checked>';
-  }else{
-    return '<input type="checkbox" name="completed" value="true">';
-  }
+exports.url = function(query, key, value, text){
+  var q = _.cloneDeep(query);
+  q[key] = value;
+  return '<a href=/tasks' + exports.queryString(q) + '>' + text + '</a>';
 };
 
-exports.makeString = function(query){
-  var keys = Object.keys(query);
-  //console.log(keys);
-  if(!keys.length){return '';}
+exports.sort = function(query, name, display){
+  var order = query.order ? query.order * -1 : 1;
+  var filter = query.filter || '';
+  var link = '<a href="/tasks?filter='+filter+'&sort='+name+'&order='+order+'">'+display+'</a>';
+  return link;
+};
 
-  var query2 = _.cloneDeep(query);
+exports.queryString = function(query){
+  var properties = Object.keys(query).map(function(prop){return prop + '=' + query[prop];});
   var s = '?';
-  for(var p in query2){
-    if(query.hasOwnProperty(p)){
-      s += p + '=' + query[p] + '&';
-    }
-  }
-  //console.log(s);
-  return s.substring(0, s.length - 1);
+  s += properties.join('&');
+  return s;
 };
 
-exports.makeTags = function(tags, query){
+exports.tags = function(query, tags){
   var links = tags.map(function(tag){
-    var s = 'filter=' + tag;
-    var keys = Object.keys(query);
-    if(keys.indexOf('sortBy') !== -1){
-      s += '&sortBy=' + query.sortBy + '&order=' + query.order;
-    }
-    return makeA(s, tag);
+    return exports.url({}, 'tag', tag, tag);
   });
+
   return links.join(', ');
 };
 
-exports.makePages = function(){
-
-};
-
-// Helper Functions
-
-function makeDue(query, text){
-  var reString = '';
-  var o = (query.order) ? query.order * -1 : 1;
-  for(var p in query){
-    if(query.hasOwnProperty(p)){
-      if(p === 'page' || p === 'filter'){
-        reString += '&' + p + '=' + query[p];
-      }
-    }
-  }
-  console.log(reString);
-  var s = 'sortBy=due&order=' + o + reString;
-  return makeA(s, text);
-}
-
-function makeCom(query, text){
-  var reString = '';
-  var o = (query.order) ? query.order * -1 : 1;
-  for(var p in query){
-    if(query.hasOwnProperty(p)){
-      if(p === 'page' || p === 'filter'){
-        reString += '&' + p + '=' + query[p];
-      }
-    }
-  }
-  console.log(reString);
-  var s = 'sortBy=isComplete&order=' + o + reString;
-  return makeA(s, text);
-}
-
-function makeA(qString, text){
-  return '<a href="/tasks?' + qString + '">' + text + '</a>';
-}
